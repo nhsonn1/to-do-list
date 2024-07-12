@@ -22,7 +22,10 @@ const todoSlice = createSlice({
             }
         },
         deleteTask: (state, action: PayloadAction<string>) => {
+            const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+            if (confirmDelete){
             return state.filter(todo => todo.id !== action.payload);
+            }
         },
         updateTask: (state, action: PayloadAction<{id: string; name: string}>) => {
             const {id, name} = action.payload;
