@@ -6,6 +6,9 @@ import AddTaskModal from "./AddTaskModal";
 import { deleteTask, toggleTaskCompletion } from "../state/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
+import AddTaskPage from "./AddTaskPage";
+import { Link } from 'react-router-dom';
+import UpdateTaskPage from "./UpdateTaskPage";
 
 const TodoList: React.FC = () => {
     const todos = useSelector((state: RootState) => state.todos);
@@ -21,11 +24,13 @@ const TodoList: React.FC = () => {
 
     return (
         <Container>
-            <h2 style={{ marginTop: '15px'}}>
+            <h2 style={{ marginTop: '15px' }}>
                 To-do List
             </h2>
-            <div style={{ marginTop: '25px', marginBottom: '35px'}}>
-            <AddTaskModal />
+            <div style={{ marginTop: '25px', marginBottom: '35px' }}>
+                <Button variant="success" as={Link as any} to="/todo-list/create">
+                    Add Task
+                </Button>
             </div>
             {todos.length === 0 ? (
                 <Card className="mt-4">
@@ -61,7 +66,9 @@ const TodoList: React.FC = () => {
                                 </td>
                                 <td>
                                     <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-                                        <UpdateTask taskId={task.id} />
+                                        <Button variant="warning" as={Link as any} to={`/todo-list/update/${task.id}`}>
+                                            Update
+                                        </Button>
                                         <Button
                                             variant="danger"
                                             onClick={() => handleDeleteTask(task.id)}
