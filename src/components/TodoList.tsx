@@ -24,9 +24,9 @@ const TodoList: React.FC = () => {
 
     return (
         <Container>
-            <h2 style={{ marginTop: '15px' }}>
+            <h1 style={{ marginTop: '15px' }}>
                 To-do List
-            </h2>
+            </h1>
             <div style={{ marginTop: '25px', marginBottom: '35px' }}>
                 <Button variant="success" as={Link as any} to="/todo-list/create">
                     Add Task
