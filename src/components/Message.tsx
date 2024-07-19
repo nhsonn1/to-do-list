@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TasksMessage = styled.div`
+export const TasksMessage = styled.div`
   margin-top: 20px;
   padding: 20px;
   text-align: center;
@@ -8,7 +8,16 @@ const TasksMessage = styled.div`
   border: 1px solid #dee2e6;
   border-radius: 5px;
   font-weight: bold;
-  color: #ff9100;
+  font-size: 1.2em;
+  color: #ff0535;
 `;
 
-export default TasksMessage;
+
+export const TaskFont = styled.td<{ completed: boolean }>`
+  font-size: 1.1em;
+  text-decoration: ${props => (props.completed ? 'line-through' : 'none')};
+  
+  //font-family: Arial, sans-serif;
+`;
+
+

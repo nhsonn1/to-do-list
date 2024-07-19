@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../state/todoSlice";
+import { addTask, addTaskAsync } from "../state/todoSlice";
 import { nanoid } from "nanoid";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Card, CardBody, Container, Form } from "react-bootstrap";
-
+import { RootState, AppDispatch } from "../state/store";
 const AddTaskPage = () => {
     const [name, setName] = useState('');
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
 
-    const handleAddTask = () => {
-        dispatch(addTask({ id: nanoid(), name, completed: false }));
-        setName('');
-        navigate('/todo-list');
-
+    const handleAddTask = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (name.trim()) {
+            dispatch(addTaskAsync({ name, completed: false }));
+            setName('');
+            navigate('/todo-list');
+        }
     };
 
     return (

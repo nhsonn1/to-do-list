@@ -1,26 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button, Card, Container } from 'react-bootstrap';
-import TasksMessage from "./Message";
+import {TasksMessage, TaskFont} from "./Message";
 import UpdateTask from "./UpdateTask";
 import AddTaskModal from "./AddTaskModal";
-import { deleteTask, toggleTaskCompletion } from "../state/todoSlice";
+import { deleteTask, deleteTaskAsync, fetchTasks, toggleTaskCompletion } from "../state/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../state/store";
+import { RootState, AppDispatch } from "../state/store";
 import AddTaskPage from "./AddTaskPage";
 import { Link } from 'react-router-dom';
 import UpdateTaskPage from "./UpdateTaskPage";
 
 const TodoList: React.FC = () => {
     const todos = useSelector((state: RootState) => state.todos);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const handleToggleCompletion = (taskId: string) => {
-        dispatch(toggleTaskCompletion(taskId));
-    };
+    useEffect(() => {
+        dispatch(fetchTasks());
+    }, [dispatch]);
+    
+    const handleToggleCompletion = async (id: string) => {
+        const task = todos.find((task) => task.id === id);
+        if (task) {
+          await fetch(`http://localhost:3001/tasks/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ...task, completed: !task.completed }),
+          });
+          dispatch(toggleTaskCompletion(id));
+        }
+      };
 
-    const handleDeleteTask = (taskId: string) => {
-        dispatch(deleteTask(taskId));
-    };
+      const handleDeleteTask = async (id: string) => {
+        dispatch(deleteTaskAsync(id));
+      };
 
     return (
         <Container>
@@ -45,18 +59,18 @@ const TodoList: React.FC = () => {
                     <thead>
                         <tr>
                             <th style={{ width: '7%' }}>No.</th>
-                            <th style={{ width: '38%' }}>Task Name</th>
+                            <th style={{ width: '40%' }}>Task Name</th>
                             <th style={{ width: '20%' }}>Completed</th>
-                            <th style={{ width: '35%' }}>Actions</th>
+                            <th style={{ width: '33%' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {todos.map((task, index) => (
                             <tr key={task.id}>
                                 <td>{index + 1}</td>
-                                <td style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+                                <TaskFont completed={task.completed}>
                                     {task.name}
-                                </td>
+                                </TaskFont>
                                 <td>
                                     <input
                                         type="checkbox"
@@ -65,8 +79,11 @@ const TodoList: React.FC = () => {
                                     />
                                 </td>
                                 <td>
-                                    <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-                                        <Button variant="warning" as={Link as any} to={`/todo-list/update/${task.id}`}>
+                                    <div style={{ display: 'flex', justifyContent: 'center', gap: '21px' }}>
+                                        <Button variant="warning" 
+                                        as={Link as any} 
+                                        to={`/todo-list/update/${task.id}`}
+                                        >
                                             Update
                                         </Button>
                                         <Button
