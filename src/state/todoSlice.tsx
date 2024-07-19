@@ -52,7 +52,7 @@ export const addTaskAsync = (task: Omit<Todo, 'id'>): AppThunk => async (dispatc
     const existingTask = previousState.find(t => t.name === task.name);
 
     if (existingTask) {
-        alert("Error adding: Task with this name already exists");
+        alert("Error adding: Task with this name already exists!");
         return;
     }
 
@@ -84,7 +84,7 @@ export const updateTaskAsync = (id: string, name: string): AppThunk => async (di
         const existingTask = previousState.find(task => task.name === name && task.id !== id);
         
         if (existingTask) {
-            alert("Error updating: Task with this name already exists");
+            alert("Error updating: Task with this name already exists!");
             return;
         }
 
