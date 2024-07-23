@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 export const TasksMessage = styled.div`
   margin-top: 20px;
   padding: 20px;
@@ -12,7 +13,14 @@ export const TasksMessage = styled.div`
   color: #ff0535;
 `;
 
-
+export const AppBackground = styled.div`
+  background-image: url('/1975new3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+`;
 export const TaskFont = styled.td<{ completed: boolean }>`
   font-size: 1.1em;
   text-decoration: ${props => (props.completed ? 'line-through' : 'none')};

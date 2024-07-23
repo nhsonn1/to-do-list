@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Card, Container } from 'react-bootstrap';
-import {TasksMessage, TaskFont} from "./Message";
+import {TasksMessage, TaskFont, AppBackground} from "./Message";
 import UpdateTask from "./UpdateTask";
 import AddTaskModal from "./AddTaskModal";
 import { deleteTask, deleteTaskAsync, fetchTasks, toggleTaskCompletion } from "../state/todoSlice";
@@ -37,8 +37,10 @@ const TodoList: React.FC = () => {
       };
 
     return (
+        <AppBackground>
         <Container>
-            <h1 style={{ marginTop: '15px' }}>
+            <h1>
+                <br></br>
                 To-do List
             </h1>
             <div style={{ marginTop: '25px', marginBottom: '35px' }}>
@@ -101,6 +103,7 @@ const TodoList: React.FC = () => {
             )
             }
         </Container>
+        </AppBackground>
     );
 
 }
