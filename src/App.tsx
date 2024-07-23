@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import AddTaskPage from './components/AddTaskPage';
 import UpdateTaskPage from './components/UpdateTaskPage';
+import { AppBackground } from './components/Message';
 
 function App() {
   return (

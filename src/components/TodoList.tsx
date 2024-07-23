@@ -37,7 +37,7 @@ const TodoList: React.FC = () => {
       };
 
     return (
-        <AppBackground>
+        
         <Container>
             <h1>
                 <br></br>
@@ -103,7 +103,7 @@ const TodoList: React.FC = () => {
             )
             }
         </Container>
-        </AppBackground>
+        
     );
 
 }
