@@ -66,8 +66,7 @@ export const addTaskAsync = (task: Omit<Todo, 'id'>): AppThunk => async (dispatc
         });
 
         if (response.ok) {
-            const newTask = await response.json();
-            dispatch(addTask(newTask));
+            dispatch(fetchTasks());
         } else {
             console.error("Failed to add task");
             dispatch(setTasks(previousState));
@@ -109,7 +108,7 @@ export const updateTaskAsync = (id: string, name: string): AppThunk => async (di
         });
 
         if (response.ok) {
-            dispatch(updateTask({ id, name }));
+            dispatch(fetchTasks());
         } else {
             console.error("Failed to update task");
             dispatch(setTasks(previousState));
@@ -124,7 +123,7 @@ export const updateTaskAsync = (id: string, name: string): AppThunk => async (di
 export const deleteTaskAsync = (id: string): AppThunk => async (dispatch, getState) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this task?");
     if (confirmDelete) {
-        const previousState = getState().todos;
+        const previousState: Todo[] = getState().todos;
 
         try {
             const response = await fetch(`http://localhost:3001/tasks/${id}`, {

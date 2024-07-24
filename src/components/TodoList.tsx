@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Card, Container } from 'react-bootstrap';
-import {TasksMessage, TaskFont, AppBackground} from "./Message";
+import {TasksMessage, TaskFont} from "./Message";
 import UpdateTask from "./UpdateTask";
 import AddTaskModal from "./AddTaskModal";
-import { deleteTask, deleteTaskAsync, fetchTasks, toggleTaskCompletion } from "../state/todoSlice";
+import { deleteTaskAsync, fetchTasks, toggleTaskCompletion } from "../state/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../state/store";
 import AddTaskPage from "./AddTaskPage";
@@ -39,11 +39,11 @@ const TodoList: React.FC = () => {
     return (
         
         <Container>
-            <h1>
+            <h1 style={{textAlign:'center'}}>
                 <br></br>
                 To-do List
             </h1>
-            <div style={{ marginTop: '25px', marginBottom: '35px' }}>
+            <div style={{ marginTop: '25px', marginBottom: '35px', textAlign:'center' }}>
                 <Button variant="success" as={Link as any} to="/todo-list/create">
                     Add Task
                 </Button>
@@ -70,7 +70,7 @@ const TodoList: React.FC = () => {
                         {todos.map((task, index) => (
                             <tr key={task.id}>
                                 <td>{index + 1}</td>
-                                <TaskFont completed={task.completed}>
+                                <TaskFont completed={task.completed.toString()}>
                                     {task.name}
                                 </TaskFont>
                                 <td>
