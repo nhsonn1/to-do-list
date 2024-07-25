@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Card, Container } from 'react-bootstrap';
-import {TasksMessage, TaskFont} from "./Message";
+import { TasksMessage, TaskFont, StyledTh, StyledTable, ActionsContainer, StyledTableWrapper} from "./Message";
 import UpdateTask from "./UpdateTask";
 import AddTaskModal from "./AddTaskModal";
 import { deleteTaskAsync, fetchTasks, toggleTaskCompletion } from "../state/todoSlice";
@@ -17,33 +17,33 @@ const TodoList: React.FC = () => {
     useEffect(() => {
         dispatch(fetchTasks());
     }, [dispatch]);
-    
+
     const handleToggleCompletion = async (id: string) => {
         const task = todos.find((task) => task.id === id);
         if (task) {
-          await fetch(`http://localhost:3001/tasks/${id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ...task, completed: !task.completed }),
-          });
-          dispatch(toggleTaskCompletion(id));
+            await fetch(`http://localhost:3001/tasks/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...task, completed: !task.completed }),
+            });
+            dispatch(toggleTaskCompletion(id));
         }
-      };
+    };
 
-      const handleDeleteTask = async (id: string) => {
+    const handleDeleteTask = async (id: string) => {
         dispatch(deleteTaskAsync(id));
-      };
+    };
 
     return (
         
         <Container>
-            <h1 style={{textAlign:'center'}}>
+            <h1 style={{ textAlign: 'center' }}>
                 <br></br>
                 To-do List
             </h1>
-            <div style={{ marginTop: '25px', marginBottom: '35px', textAlign:'center' }}>
+            <div style={{ marginTop: '25px', marginBottom: '35px', textAlign: 'center' }}>
                 <Button variant="success" as={Link as any} to="/todo-list/create">
                     Add Task
                 </Button>
@@ -57,23 +57,25 @@ const TodoList: React.FC = () => {
                     </Card.Body>
                 </Card>
             ) : (
-                <Table striped bordered hover className="mt-4">
+                <StyledTableWrapper>
+                <StyledTable striped bordered hover>
                     <thead>
                         <tr>
-                            <th style={{ width: '7%' }}>No.</th>
-                            <th style={{ width: '40%' }}>Task Name</th>
-                            <th style={{ width: '20%' }}>Completed</th>
-                            <th style={{ width: '33%' }}>Actions</th>
+                            <StyledTh width="7%">No.</StyledTh>
+                            <StyledTh width="40%">Task Name</StyledTh>
+                            <StyledTh width="20%">Completed</StyledTh>
+                            <StyledTh width="33%">Actions</StyledTh>
                         </tr>
                     </thead>
                     <tbody>
                         {todos.map((task, index) => (
                             <tr key={task.id}>
-                                <td>{index + 1}</td>
+                                <td style={{verticalAlign:'middle'}}
+                                >{index + 1}</td>
                                 <TaskFont completed={task.completed.toString()}>
                                     {task.name}
                                 </TaskFont>
-                                <td>
+                                <td style={{verticalAlign:'middle'}}>
                                     <input
                                         type="checkbox"
                                         checked={task.completed}
@@ -81,10 +83,10 @@ const TodoList: React.FC = () => {
                                     />
                                 </td>
                                 <td>
-                                    <div style={{ display: 'flex', justifyContent: 'center', gap: '21px' }}>
-                                        <Button variant="warning" 
-                                        as={Link as any} 
-                                        to={`/todo-list/update/${task.id}`}
+                                    <ActionsContainer>
+                                        <Button variant="warning"
+                                            as={Link as any}
+                                            to={`/todo-list/update/${task.id}`}
                                         >
                                             Update
                                         </Button>
@@ -94,16 +96,17 @@ const TodoList: React.FC = () => {
                                         >
                                             Delete
                                         </Button>
-                                    </div>
+                                    </ActionsContainer>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
-                </Table>
+                </StyledTable>
+                </StyledTableWrapper>
             )
             }
         </Container>
-        
+
     );
 
 }
