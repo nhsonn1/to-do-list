@@ -82,7 +82,7 @@ const TodoList: React.FC = () => {
                                         onChange={() => handleToggleCompletion(task.id)}
                                     />
                                 </td>
-                                <td>
+                                <td style={{verticalAlign:'middle'}}>
                                     <ActionsContainer>
                                         <Button variant="warning"
                                             as={Link as any}
