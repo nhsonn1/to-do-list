@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Table as BootstrapTable} from 'react-bootstrap';
+import { Table as BootstrapTable, Card as BootstrapCard } from 'react-bootstrap';
 
 
 export const TasksMessage = styled.div`
@@ -28,6 +28,9 @@ export const TasksMessage = styled.div`
 
 export const StyledTableWrapper = styled.div`
   overflow-x: auto;
+  @media (max-width: 575px) {
+    display: none;
+  }
 `;
 
 export const StyledTable = styled(BootstrapTable)`
@@ -81,7 +84,7 @@ export const TaskFont = styled.td<{ completed: string }>`
     font-size: 1.15em;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 350px) {
     font-size: 1.15em;
   }
 `;
@@ -106,3 +109,39 @@ export const ActionsContainer = styled.div`
   }
 `;
 
+export const CenteredContainer = styled.div`
+    display: none;
+  
+  @media (max-width: 575px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const StyledCard = styled(BootstrapCard)`
+    display:none;
+    
+    @media (max-width: 350px) {
+      display: block;
+    }
+`;
+
+export const TaskItem = styled.li`
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  
+  
+`;
+
+export const TaskName = styled.span<{ completed: string }>`
+  text-decoration: ${({ completed }) => (completed === 'true' ? 'line-through' : 'none')};
+  vertical-align: middle;
+  flex-grow: 1;
+`;

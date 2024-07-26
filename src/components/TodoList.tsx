@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Card, Container } from 'react-bootstrap';
-import { TasksMessage, TaskFont, StyledTh, StyledTable, ActionsContainer, StyledTableWrapper} from "./Message";
+import { TasksMessage, TaskFont, StyledTh, StyledTable, ActionsContainer, StyledTableWrapper, StyledCard, ButtonGroup, TaskItem, TaskName, CenteredContainer } from "./Message";
 import UpdateTask from "./UpdateTask";
 import AddTaskModal from "./AddTaskModal";
 import { deleteTaskAsync, fetchTasks, toggleTaskCompletion } from "../state/todoSlice";
@@ -37,7 +37,7 @@ const TodoList: React.FC = () => {
     };
 
     return (
-        
+
         <Container>
             <h1 style={{ textAlign: 'center' }}>
                 <br></br>
@@ -57,56 +57,85 @@ const TodoList: React.FC = () => {
                     </Card.Body>
                 </Card>
             ) : (
-                <StyledTableWrapper>
-                <StyledTable striped bordered hover>
-                    <thead>
-                        <tr>
-                            <StyledTh width="7%">No.</StyledTh>
-                            <StyledTh width="40%">Task Name</StyledTh>
-                            <StyledTh width="20%">Completed</StyledTh>
-                            <StyledTh width="33%">Actions</StyledTh>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {todos.map((task, index) => (
-                            <tr key={task.id}>
-                                <td style={{verticalAlign:'middle'}}
-                                >{index + 1}</td>
-                                <TaskFont completed={task.completed.toString()}>
-                                    {task.name}
-                                </TaskFont>
-                                <td style={{verticalAlign:'middle'}}>
+                <>
+                    <StyledTableWrapper>
+                        <StyledTable striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <StyledTh width="7%">No.</StyledTh>
+                                    <StyledTh width="40%">Task Name</StyledTh>
+                                    <StyledTh width="20%">Completed</StyledTh>
+                                    <StyledTh width="33%">Actions</StyledTh>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {todos.map((task, index) => (
+                                    <tr key={task.id}>
+                                        <td style={{ verticalAlign: 'middle', textAlign: 'center' }}
+                                        >{index + 1}</td>
+                                        <TaskFont completed={task.completed.toString()}>
+                                            {task.name}
+                                        </TaskFont>
+                                        <td style={{ verticalAlign: 'middle' }}>
+                                            <input
+                                                type="checkbox"
+                                                checked={task.completed}
+                                                onChange={() => handleToggleCompletion(task.id)}
+                                            />
+                                        </td>
+                                        <td style={{ verticalAlign: 'middle' }}>
+                                            <ActionsContainer>
+                                                <Button variant="warning"
+                                                    as={Link as any}
+                                                    to={`/todo-list/update/${task.id}`}
+                                                >
+                                                    Update
+                                                </Button>
+                                                <Button
+                                                    variant="danger"
+                                                    onClick={() => handleDeleteTask(task.id)}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </ActionsContainer>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </StyledTable>
+                    </StyledTableWrapper>
+
+                    <CenteredContainer>
+                    <ul>
+                        {todos.map((task) => (
+                                <TaskItem key={task.id}>
+                                    <TaskName completed={task.completed.toString()}>
+                                        {task.name}
+                                    </TaskName>
                                     <input
                                         type="checkbox"
                                         checked={task.completed}
                                         onChange={() => handleToggleCompletion(task.id)}
+                                        style={{ marginLeft: '10px' }}
                                     />
-                                </td>
-                                <td style={{verticalAlign:'middle'}}>
-                                    <ActionsContainer>
-                                        <Button variant="warning"
-                                            as={Link as any}
-                                            to={`/todo-list/update/${task.id}`}
-                                        >
+
+                                    <ButtonGroup>
+                                        <Button variant="link" as={Link as any} to={`/todo-list/update/${task.id}`} style={{ color: '#ffc107' }}>
                                             Update
                                         </Button>
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => handleDeleteTask(task.id)}
-                                        >
+                                        <Button variant="link" onClick={() => handleDeleteTask(task.id)} style={{ color: '#dc3545' }}>
                                             Delete
                                         </Button>
-                                    </ActionsContainer>
-                                </td>
-                            </tr>
+                                    </ButtonGroup>
+                                </TaskItem>
+                            
                         ))}
-                    </tbody>
-                </StyledTable>
-                </StyledTableWrapper>
+                    </ul>
+                    </CenteredContainer>
+                </>
             )
             }
         </Container>
-
     );
 
 }
