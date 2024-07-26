@@ -41,6 +41,9 @@ export const StyledTable = styled(BootstrapTable)`
 
   @media (max-width: 360px) {
     font-size: 1em;
+    thead {
+      display: none;
+    }
   }
 `;
 
@@ -83,6 +86,23 @@ export const TaskFont = styled.td<{ completed: string }>`
 
   @media (max-width: 360px) {
     font-size: 1.15em;
+  }
+`;
+
+export const CheckboxCell = styled.td`
+  vertical-align: middle;
+  text-align: center;
+  
+  @media (max-width: 360px) {
+    width: 22%; 
+  }
+`;
+
+export const ActionsCell = styled.td`
+  vertical-align: middle;
+  
+  @media (max-width: 360px) {
+    width: 31%; 
   }
 `;
 

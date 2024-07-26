@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Card, Container } from 'react-bootstrap';
-import { TasksMessage, TaskFont, StyledTh, StyledTable, ActionsContainer, StyledTableWrapper} from "./Message";
+import { TasksMessage, TaskFont, StyledTh, StyledTable, ActionsContainer, StyledTableWrapper, ActionsCell, CheckboxCell} from "./Message";
 import UpdateTask from "./UpdateTask";
 import AddTaskModal from "./AddTaskModal";
 import { deleteTaskAsync, fetchTasks, toggleTaskCompletion } from "../state/todoSlice";
@@ -70,19 +70,20 @@ const TodoList: React.FC = () => {
                     <tbody>
                         {todos.map((task, index) => (
                             <tr key={task.id}>
-                                <td style={{verticalAlign:'middle'}}
-                                >{index + 1}</td>
+                                <td style={{verticalAlign:'middle'}}>
+                                    {index + 1}
+                                </td>
                                 <TaskFont completed={task.completed.toString()}>
                                     {task.name}
                                 </TaskFont>
-                                <td style={{verticalAlign:'middle'}}>
+                                <CheckboxCell>
                                     <input
                                         type="checkbox"
                                         checked={task.completed}
                                         onChange={() => handleToggleCompletion(task.id)}
                                     />
-                                </td>
-                                <td style={{verticalAlign:'middle'}}>
+                                </CheckboxCell>
+                                <ActionsCell>
                                     <ActionsContainer>
                                         <Button variant="warning"
                                             as={Link as any}
@@ -97,7 +98,7 @@ const TodoList: React.FC = () => {
                                             Delete
                                         </Button>
                                     </ActionsContainer>
-                                </td>
+                                </ActionsCell>
                             </tr>
                         ))}
                     </tbody>
